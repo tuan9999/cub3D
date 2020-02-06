@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/15 17:30:09 by tuperera       #+#    #+#                */
-/*   Updated: 2020/01/19 14:57:53 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 13:22:28 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 void			get_texture_img(t_raycaster *rc)
 {
-	rc->text.img_ptr = mlx_png_file_to_image(rc->mlx_ptr, g_north_text,
-					&(rc->text.width), &(rc->text.height));
+	rc->text.img_ptr = mlx_png_file_to_image(rc->mlx_ptr,
+	rc->globals.north_text, &(rc->text.width), &(rc->text.height));
 	rc->text.addr = mlx_get_data_addr(rc->text.img_ptr,
 	&(rc->text.bits_per_pixel), &(rc->text.line_length), &(rc->text.endian));
 	rc->textsouth.img_ptr = mlx_png_file_to_image(rc->mlx_ptr,
-				g_south_text, &(rc->textsouth.width), &(rc->textsouth.height));
+	rc->globals.south_text, &(rc->textsouth.width), &(rc->textsouth.height));
 	rc->textsouth.addr = mlx_get_data_addr(rc->textsouth.img_ptr,
 	&(rc->textsouth.bits_per_pixel), &(rc->textsouth.line_length),
 	&(rc->text.endian));
 	rc->texteast.img_ptr = mlx_png_file_to_image(rc->mlx_ptr,
-				g_east_text, &(rc->texteast.width), &(rc->texteast.height));
+		rc->globals.east_text, &(rc->texteast.width), &(rc->texteast.height));
 	rc->texteast.addr = mlx_get_data_addr(rc->texteast.img_ptr,
 		&(rc->texteast.bits_per_pixel), &(rc->texteast.line_length),
 		&(rc->texteast.endian));
-	rc->textwest.img_ptr = mlx_png_file_to_image(rc->mlx_ptr, g_west_text,
-						&(rc->textwest.width), &(rc->textwest.height));
+	rc->textwest.img_ptr = mlx_png_file_to_image(rc->mlx_ptr,
+	rc->globals.west_text, &(rc->textwest.width), &(rc->textwest.height));
 	rc->textwest.addr = mlx_get_data_addr(rc->textwest.img_ptr,
 			&(rc->textwest.bits_per_pixel), &(rc->textwest.line_length),
 			&(rc->textwest.endian));
-	rc->sprite.img_ptr = mlx_png_file_to_image(rc->mlx_ptr, g_sprite_text,
-			&(rc->sprite.width), &(rc->sprite.height));
+	rc->sprite.img_ptr = mlx_png_file_to_image(rc->mlx_ptr,
+	rc->globals.sprite_text, &(rc->sprite.width), &(rc->sprite.height));
 	rc->sprite.addr = mlx_get_data_addr(rc->sprite.img_ptr,
 		&(rc->sprite.bits_per_pixel), &(rc->sprite.line_length),
 		&(rc->sprite.endian));

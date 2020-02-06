@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/20 13:56:53 by tuperera       #+#    #+#                */
-/*   Updated: 2020/01/23 13:52:44 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 16:00:51 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ int				render_img(t_raycaster *rc)
 	int x;
 
 	x = 0;
-	g_z_buffer = (double *)malloc(sizeof(double) * g_win_x);
-	rc->img_ptr = mlx_new_image(rc->mlx_ptr, g_win_x, g_win_y);
+	g_z_buffer = (double *)malloc(sizeof(double) * rc->globals.win_x);
+	rc->img_ptr = mlx_new_image(rc->mlx_ptr, rc->globals.win_x,
+								rc->globals.win_y);
 	rc->addr = mlx_get_data_addr(rc->img_ptr, &(rc->bits_per_pixel),
 								&(rc->line_length), &(rc->endian));
 	get_texture_img(rc);
-	while (x < g_win_x)
+	while (x < rc->globals.win_x)
 	{
 		initial_calc(rc, x);
 		perform_dda(rc);
@@ -59,15 +60,15 @@ void			writer(t_bmpheader bmp_head, int fd)
 	write(fd, &bmp_head.important_colors, 4);
 }
 
-void			pop_bmp_head(t_bmpheader *bmp_head)
+void			pop_bmp_head(t_bmpheader *bmp_head, t_raycaster *rc)
 {
 	bmp_head->type = 0x4d42;
 	bmp_head->reserved1 = 0;
 	bmp_head->reserved2 = 0;
 	bmp_head->offset = 54;
 	bmp_head->dib_header_size = 40;
-	bmp_head->width_px = g_win_x;
-	bmp_head->height_px = g_win_y;
+	bmp_head->width_px = rc->globals.win_x;
+	bmp_head->height_px = rc->globals.win_y;
 	bmp_head->size = 54 + (bmp_head->height_px * bmp_head->width_px * 3);
 	bmp_head->num_planes = 1;
 	bmp_head->bits_per_pixel = 24;
@@ -88,11 +89,11 @@ void			image_pop(t_raycaster *rc, t_bmpimage bmp_img,
 	int			k;
 
 	k = 0;
-	i = g_win_y - 1;
+	i = rc->globals.win_y - 1;
 	while (i >= 0)
 	{
 		j = 0;
-		while (j != g_win_x)
+		while (j != rc->globals.win_x)
 		{
 			pos = ((i * rc->line_length) + (j * (rc->bits_per_pixel / 8)));
 			bcolor.pixel = *((unsigned int *)(rc->addr + pos));
@@ -119,7 +120,7 @@ void			bmp_creator(t_raycaster *rc)
 	fd = open("./img.bmp", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IXUSR);
 	bcolor.pixel = 0;
 	bmp_img.data = malloc(sizeof(unsigned char) * bmp_head.image_size_bytes);
-	pop_bmp_head(&bmp_head);
+	pop_bmp_head(&bmp_head, rc);
 	render_img(rc);
 	image_pop(rc, bmp_img, bcolor);
 	writer(bmp_head, fd);

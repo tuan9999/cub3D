@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/12 14:16:05 by tuperera       #+#    #+#                */
-/*   Updated: 2020/02/02 11:20:39 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 12:48:16 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void			draw_vert_line(t_raycaster *rc, int x)
 	y = 0;
 	while (y <= rc->draw_start)
 	{
-		ft_put_pixel(rc, g_ce_color, y, x);
+		ft_put_pixel(rc, rc->globals.ce_color, y, x);
 		y++;
 	}
 	while (y <= rc->draw_end)
@@ -48,9 +48,9 @@ void			draw_vert_line(t_raycaster *rc, int x)
 		ft_put_pixel(rc, g_color, y, x);
 		y++;
 	}
-	while (y < g_win_y)
+	while (y < rc->globals.win_y)
 	{
-		ft_put_pixel(rc, g_fl_color, y, x);
+		ft_put_pixel(rc, rc->globals.fl_color, y, x);
 		y++;
 	}
 }

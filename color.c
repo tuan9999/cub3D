@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/12 14:13:25 by tuperera       #+#    #+#                */
-/*   Updated: 2020/01/20 13:09:25 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 12:04:10 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ unsigned int		select_wall_color(int map_x, int map_y)
 void				comb_sort_ex(int *order, double *dist,
 									t_sort *sort)
 {
-	sort->j = sort->i + sort->gap;
-	if (dist[sort->i] < dist[sort->j])
+	if (dist[sort->i] > dist[sort->j])
 	{
 		sort->tempdist = dist[sort->i];
 		dist[sort->i] = dist[sort->j];
@@ -43,7 +42,6 @@ void				comb_sort_ex(int *order, double *dist,
 		sort->tempord = order[sort->i];
 		order[sort->i] = order[sort->j];
 		order[sort->j] = sort->tempord;
-		sort->swapped = 1;
 	}
 }
 
@@ -51,21 +49,15 @@ void				comb_sort(int *order, double *dist, int amount)
 {
 	t_sort	sort;
 
-	sort.gap = amount;
 	sort.i = 0;
-	sort.swapped = 0;
-	while (sort.gap > 1 || sort.swapped)
+	while (sort.i < amount)
 	{
-		sort.gap = (sort.gap * 10) / 13;
-		if (sort.gap == 9 || sort.gap == 10)
-			sort.gap = 11;
-		if (sort.gap < 1)
-			sort.gap = 1;
-		sort.swapped = 0;
-		while (sort.i < amount - sort.gap)
+		sort.j = 0;
+		while (sort.j < amount)
 		{
 			comb_sort_ex(order, dist, &sort);
-			sort.i++;
+			sort.j++;
 		}
+		sort.i++;
 	}
 }

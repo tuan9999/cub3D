@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strlcpy.c                                       :+:    :+:            */
+/*   ft_char_num.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/10/28 15:01:47 by tuperera       #+#    #+#                */
-/*   Updated: 2020/02/05 11:01:31 by tuperera      ########   odam.nl         */
+/*   Created: 2020/02/06 16:07:15 by tuperera       #+#    #+#                */
+/*   Updated: 2020/02/06 16:18:16 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-#include "libft.h"
+#include "./libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+int		ft_char_num(const char *str, int c)
 {
-	size_t i;
+	char	*p;
+	int		count;
 
-	i = 0;
-	if (!dst || !src)
-		return (i);
-	if (!dstsize)
-		return (ft_strlen(src));
-	while (i < dstsize - 1 && src[i])
+	p = (char *)str;
+	count = 0;
+	while (*p)
 	{
-		dst[i] = src[i];
-		i++;
+		if (*p == (unsigned char)c)
+			count++;
+		p++;
 	}
-	dst[i] = '\0';
-	i = 0;
-	while (src[i])
-		i++;
-	return (i);
+	return (count);
 }

@@ -6,32 +6,25 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/20 12:05:25 by tuperera       #+#    #+#                */
-/*   Updated: 2020/01/20 12:06:44 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 13:52:04 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		freearr(int count)
+int		freearr(void)
 {
-	while (count >= 0)
-	{
-		if (g_worldmap[count])
-			free(g_worldmap[count]);
-		count--;
-	}
-	if (g_worldmap)
-		free(g_worldmap);
-	return (-1);
+	ft_putstr_fd("Map error.", 1);
+	exit(0);
 }
 
-int		malloc_map(void)
+int		malloc_map(t_raycaster *rc)
 {
 	int x;
 	int w_y;
 
-	x = g_mapheight;
-	w_y = g_mapwidth;
+	x = rc->globals.mapheight;
+	w_y = rc->globals.mapwidth;
 	g_worldmap = (int **)malloc(sizeof(int *) * x + 1);
 	if (!g_worldmap)
 		return (-1);
@@ -40,11 +33,11 @@ int		malloc_map(void)
 		x--;
 		g_worldmap[x] = (int *)malloc(sizeof(int) * w_y + 1);
 		if (!g_worldmap[x])
-			return (freearr(x));
+			freearr();
 	}
 	g_worldmap[x] = (int *)malloc(sizeof(int) * w_y + 1);
 	if (!g_worldmap[x])
-		return (freearr(x));
+		freearr();
 	return (0);
 }
 

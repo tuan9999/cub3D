@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/20 12:00:54 by tuperera       #+#    #+#                */
-/*   Updated: 2020/01/27 16:37:41 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 12:41:40 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ unsigned int	ft_put_text(t_raycaster *rc, unsigned int color, int y)
 	int d;
 	int pos;
 
-	d = (256 * y) - (128 * g_win_y) + (128 * rc->line_height);
+	d = (256 * y) - (128 * rc->globals.win_y) + (128 * rc->line_height);
 	rc->text.text_y = ((d * rc->text.height) / rc->line_height) / 256;
 	if (rc->text.text_y > 63)
 		rc->text.text_y = 63;
@@ -34,7 +34,7 @@ unsigned int	ft_put_text_south(t_raycaster *rc, unsigned int color, int y)
 	int d;
 	int pos;
 
-	d = (256 * y) - (128 * g_win_y) + (128 * rc->line_height);
+	d = (256 * y) - (128 * rc->globals.win_y) + (128 * rc->line_height);
 	rc->textsouth.text_y = ((d * rc->textsouth.height) / rc->line_height) / 256;
 	if (rc->textsouth.text_y > 63)
 		rc->textsouth.text_y = 63;
@@ -51,7 +51,7 @@ unsigned int	ft_put_text_east(t_raycaster *rc, unsigned int color, int y)
 	int d;
 	int pos;
 
-	d = (256 * y) - (128 * g_win_y) + (128 * rc->line_height);
+	d = (256 * y) - (128 * rc->globals.win_y) + (128 * rc->line_height);
 	rc->texteast.text_y = ((d * rc->texteast.height) / rc->line_height) / 256;
 	if (rc->texteast.text_y > 63)
 		rc->texteast.text_y = 63;
@@ -68,7 +68,7 @@ unsigned int	ft_put_text_west(t_raycaster *rc, unsigned int color, int y)
 	int d;
 	int pos;
 
-	d = (256 * y) - (128 * g_win_y) + (128 * rc->line_height);
+	d = (256 * y) - (128 * rc->globals.win_y) + (128 * rc->line_height);
 	rc->textwest.text_y = ((d * rc->textwest.height) / rc->line_height) / 256;
 	if (rc->textwest.text_y > 63)
 		rc->textwest.text_y = 63;

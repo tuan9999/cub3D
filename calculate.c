@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/15 17:44:49 by tuperera       #+#    #+#                */
-/*   Updated: 2020/01/20 13:08:57 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 12:41:40 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void			initial_calc(t_raycaster *rc, int x)
 {
 	double	camera_x;
 
-	camera_x = 2 * x / (double)(g_win_x) - 1;
+	camera_x = 2 * x / (double)(rc->globals.win_x) - 1;
 	rc->ray_dir_x = rc->player_dir_x + rc->player_plane_x * camera_x;
 	rc->ray_dir_y = rc->player_dir_y + rc->player_plane_y * camera_x;
 	rc->map_x = (int)(rc->player_pos_x);
@@ -84,11 +84,11 @@ void			calc_wall_height(t_raycaster *rc)
 	else
 		rc->perp_wall_dist = (rc->map_y - rc->player_pos_y +
 								(1 - rc->step_y) / 2) / rc->ray_dir_y;
-	rc->line_height = (int)(g_win_y / rc->perp_wall_dist);
-	rc->draw_start = -rc->line_height / 2 + g_win_y / 2;
+	rc->line_height = (int)(rc->globals.win_y / rc->perp_wall_dist);
+	rc->draw_start = -rc->line_height / 2 + rc->globals.win_y / 2;
 	if (rc->draw_start < 0)
 		rc->draw_start = 0;
-	rc->draw_end = rc->line_height / 2 + g_win_y / 2;
-	if (rc->draw_end >= g_win_y)
-		rc->draw_end = g_win_y - 1;
+	rc->draw_end = rc->line_height / 2 + rc->globals.win_y / 2;
+	if (rc->draw_end >= rc->globals.win_y)
+		rc->draw_end = rc->globals.win_y - 1;
 }

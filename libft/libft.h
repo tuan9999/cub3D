@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/31 11:26:00 by tuperera       #+#    #+#                */
-/*   Updated: 2019/11/18 17:30:49 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/06 16:09:50 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 int				ft_atoi(char const *str);
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t count, size_t size);
+int				ft_char_num(const char *str, int c);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
 int				ft_isascii(int c);

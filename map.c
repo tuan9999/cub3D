@@ -6,74 +6,129 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/12 13:05:56 by tuperera       #+#    #+#                */
-/*   Updated: 2020/01/20 12:20:47 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 17:35:31 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		check_map(char **file)
+int		check_map(char **file, t_raycaster *rc)
 {
 	int		x;
 	int		y;
 	int		ycheck;
 	char	*set;
 
-	set = "NSEW";
+	set = "012NSEW";
 	x = 0;
 	ycheck = 0;
 	while (file[x] && file[x][0] != '\0')
 	{
 		y = 0;
-		while (file[x][y] && (ft_isdigit(file[x][y]) == 1 ||
-								ft_strchr(set, file[x][y])))
+		while (file[x][y] && ft_strchr(set, file[x][y]))
 			y++;
-		if (x != 0 && ycheck != y)
+		if ((x != 0 && ycheck != y) || ft_strchr(set, file[x][y]) == NULL ||
+		(file[x][0] == '\0' && file[x + 1][0] == '1' && file[x - 1][0] == '1'))
 		{
 			ft_putstr_fd("invalid map\n", 1);
-			return (-1);
+			exit(0);
 		}
 		ycheck = y;
 		x++;
 	}
-	g_mapwidth = y;
-	g_mapheight = x;
+	rc->globals.mapwidth = y;
+	rc->globals.mapheight = x;
 	return (0);
 }
 
-int		pop_map_ex(char **file, int w_y, int x, int y)
+int		pop_map_ex(int w_y, int x, int y, t_raycaster *rc)
 {
 	char *set;
 
 	set = "NSEW";
-	if (ft_strchr(set, file[x][y]))
+	if (ft_strchr(set, rc->globals.file[x][y]))
 	{
-		g_direction = file[x][y];
+		rc->globals.direction = rc->globals.file[x][y];
 		g_worldmap[x][w_y] = 0;
-		g_play_pos_x = x;
-		g_play_pos_y = w_y;
+		rc->player_pos_x = x;
+		rc->player_pos_y = w_y;
 	}
-	else if (file[x][y] == '2')
+	else if (rc->globals.file[x][y] == '2')
 	{
 		g_num_sprite++;
 		g_worldmap[x][w_y] = 0;
 	}
 	else
-		g_worldmap[x][w_y] = file[x][y] - '0';
+		g_worldmap[x][w_y] = rc->globals.file[x][y] - '0';
 	w_y++;
 	return (w_y);
 }
 
-int		populate_map(char **file)
+void	check_closed_map(int x, int y)
+{
+	int cx;
+	int cy;
+
+	cx = 0;
+	x--;
+	y--;
+	while (cx != x)
+	{
+		cy = 0;
+		if (g_worldmap[cx][0] != 1 || g_worldmap[cx][y] != 1)
+		{
+			ft_putstr_fd("invalid map\n", 1);
+			exit(0);
+		}
+		while (cy != y)
+		{
+			if (g_worldmap[0][cy] != 1 || g_worldmap[x][cy] != 1)
+			{
+				ft_putstr_fd("invalid map\n", 1);
+				exit(0);
+			}
+			cy++;
+		}
+		cx++;
+	}
+}
+
+int		check_map_start_pos(char **file)
+{
+	int		x;
+	int		y;
+	int		check;
+
+	check = 0;
+	x = 0;
+	while (file[x] && file[x][0] != '\0')
+	{
+		y = 0;
+		while (file[x][y] && (ft_strchr("012", file[x][y]) ||
+			ft_strchr("NSEW", file[x][y])))
+		{
+			if (ft_strchr("NSEW", file[x][y]) && check == 1)
+				freearr();
+			if (ft_strchr("NSEW", file[x][y]))
+				check = 1;
+			y++;
+		}
+		x++;
+	}
+	if (check == 0)
+		freearr();
+	return (0);
+}
+
+void	populate_map(char **file, t_raycaster *rc)
 {
 	int		x;
 	int		y;
 	int		w_y;
-	char	*set;
 
-	set = "NSEW";
-	if ((check_map(file) < 0) || (malloc_map() < 0))
-		return (-1);
+	if ((check_map(file, rc) < 0) || (malloc_map(rc) < 0) ||
+		check_map_start_pos(file) < 0)
+		exit(0);
 	x = 0;
 	g_num_sprite = 0;
 	while (file[x][0])
@@ -82,13 +137,13 @@ int		populate_map(char **file)
 		y = 0;
 		while (file[x][y])
 		{
-			if (ft_isdigit(file[x][y]) == 1 || ft_strchr(set, file[x][y]))
-				w_y = pop_map_ex(file, w_y, x, y);
+			if (ft_strchr("012NSEW", file[x][y]))
+				w_y = pop_map_ex(w_y, x, y, rc);
 			y++;
 		}
 		x++;
 	}
 	if (g_num_sprite > 0)
 		populate_sprite(file);
-	return (0);
+	check_closed_map(x, y);
 }

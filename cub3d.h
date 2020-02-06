@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 11:42:46 by tuperera       #+#    #+#                */
-/*   Updated: 2020/02/02 11:54:22 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/05 15:56:54 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,32 @@ typedef struct		s_sprite_list
 	double			y;
 }					t_sprite_list;
 
+typedef	struct		s_globals
+{
+	char			**file;
+	int				filelen;
+	int				win_x;
+	int				win_y;
+	t_color			floor_color;
+	t_color			ceiling_color;
+	unsigned int	fl_color;
+	unsigned int	ce_color;
+	char			*north_text;
+	char			*south_text;
+	char			*west_text;
+	char			*east_text;
+	char			*sprite_text;
+	int				movingforward;
+	int				movingback;
+	int				movingright;
+	int				movingleft;
+	int				straferight;
+	int				strafeleft;
+	char			direction;
+	int				mapwidth;
+	int				mapheight;
+}					t_globals;
+
 typedef struct		s_raycaster
 {
 	void			*mlx_ptr;
@@ -149,6 +175,7 @@ typedef struct		s_raycaster
 	t_texture		texteast;
 	t_texture		textwest;
 	t_sprite		sprite;
+	t_globals		globals;
 }					t_raycaster;
 
 typedef struct		s_bmpheader
@@ -185,61 +212,32 @@ typedef struct		s_bmpimage
 	unsigned char	*data;
 }					t_bmpimage;
 
-int					g_win_x;
-int					g_win_y;
-char				*g_north_text;
-char				*g_south_text;
-char				*g_west_text;
-char				*g_east_text;
-char				*g_sprite_text;
-t_color				g_floor_color;
-t_color				g_ceiling_color;
-
 unsigned int		g_color;
-unsigned int		g_fl_color;
-unsigned int		g_ce_color;
-
-char				**g_file;
-char				g_direction;
-
-int					g_mapwidth;
-int					g_mapheight;
 int					**g_worldmap;
-int					g_filelen;
-
 int					g_num_sprite;
 double				*g_z_buffer;
 t_sprite_list		*g_sprite_list;
 
-int					g_play_pos_x;
-int					g_play_pos_y;
+int					get_resolution(char *file, t_raycaster *rc);
+int					get_path_north(char *file, t_raycaster *rc);
+int					get_path_south(char *file, t_raycaster *rc);
+int					get_path_west(char *file, t_raycaster *rc);
+int					get_path_east(char *file, t_raycaster *rc);
+int					get_path_sprite(char *file, t_raycaster *rc);
+int					check_valid(char **file, t_raycaster *rc);
+int					get_floor_color(char *file, t_raycaster *rc);
+int					get_ceiling_color(char *file, t_raycaster *rc);
 
-int					g_movingforward;
-int					g_movingback;
-int					g_movingright;
-int					g_movingleft;
-int					g_straferight;
-int					g_strafeleft;
-
-int					get_resolution(char *file);
-int					get_path_north(char *file);
-int					get_path_south(char *file);
-int					get_path_west(char *file);
-int					get_path_east(char *file);
-int					get_path_sprite(char *file);
-int					check_valid(char **file, int (*funct_ptr[])());
-int					get_floor_color(char *file);
-int					get_ceiling_color(char *file);
-
-int					populate_map(char **file);
-int					check_map(char **file);
-int					freearr(int count);
-int					freefile(int count);
-int					malloc_map(void);
+void				populate_map(char **file, t_raycaster *rc);
+int					check_map(char **file, t_raycaster *rc);
+int					freearr(void);
+int					freefile(void);
+int					malloc_map(t_raycaster *rc);
 int					populate_sprite(char **file);
+void				assign_paths(char *file, t_raycaster *rc);
 
-void				gnl(char *line, int fd, int i);
-int					get_file(char *argv);
+void				gnl(char *line, int fd, t_raycaster *rc);
+int					get_file(char *argv, t_raycaster *rc);
 
 void				get_texture_img(t_raycaster *rc);
 void				calculatetext(t_raycaster *rc);
@@ -258,7 +256,8 @@ unsigned int		ft_put_text_west(t_raycaster *rc, unsigned int color,
 void				change_dir(t_raycaster *rc);
 int					init(t_raycaster *rc);
 int					bmp_init(t_raycaster *rc);
-int					error_check(char **args, int argc);
+int					error_check(char **args, int argc, t_raycaster *rc);
+int					ft_exit_prgm(void);
 
 void				initial_calc(t_raycaster *rc, int x);
 void				init_calc_exten(t_raycaster *rc);
@@ -266,7 +265,7 @@ void				perform_dda(t_raycaster *rc);
 void				calc_wall_height(t_raycaster *rc);
 
 int					handle_events(int keycode, t_raycaster *rc);
-int					handle_release(int keycode);
+int					handle_release(int keycode, t_raycaster *rc);
 int					handle_moving(t_raycaster *rc);
 
 unsigned int		select_wall_color(int map_x, int map_y);
