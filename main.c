@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/04 16:10:30 by tuperera       #+#    #+#                */
-/*   Updated: 2020/02/06 15:50:39 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/08 10:26:33 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void			init_struct(t_raycaster *rc)
 	rc->globals.east_text = NULL;
 	rc->globals.west_text = NULL;
 	rc->globals.sprite_text = NULL;
+	rc->globals.direction = '\0';
 	rc->globals.win_x = 0;
 	rc->globals.win_y = 0;
 	rc->globals.floor_color.r = -1;

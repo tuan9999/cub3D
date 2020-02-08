@@ -6,13 +6,13 @@
 #    By: tuperera <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/28 13:06:02 by tuperera       #+#    #+#                 #
-#    Updated: 2020/02/05 10:44:12 by tuperera      ########   odam.nl          #
+#    Updated: 2020/02/08 10:35:31 by tuperera      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = gnl.a
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra
 
 SRC = get_next_line.c get_next_line_utils.c
 

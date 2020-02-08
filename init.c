@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/15 17:42:10 by tuperera       #+#    #+#                */
-/*   Updated: 2020/02/06 11:06:18 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/08 10:26:15 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int				init(t_raycaster *rc)
 	rc->player_dir_y = INIT_P_DIR_Y;
 	rc->player_plane_x = INIT_P_PLANE_X;
 	rc->player_plane_y = INIT_P_PLANE_Y;
+	if (!rc->globals.direction)
+		freefile();
 	if (rc->globals.direction != 'N')
 		change_dir(rc);
 	rc->mlx_ptr = mlx_init();

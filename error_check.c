@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/27 14:58:31 by tuperera       #+#    #+#                */
-/*   Updated: 2020/02/06 14:38:06 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/08 10:15:23 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		error_check(char **args, int argc, t_raycaster *rc)
 			rc->globals.win_x = 2560;
 		if (rc->globals.win_y > 1440)
 			rc->globals.win_y = 1440;
-		ft_putstr_fd("Invalid resolution, resolution resized", 1);
+		ft_putstr_fd("Invalid resolution, resolution resized\n", 1);
 	}
 	else if (argc > 3 || argc < 2)
 	{
@@ -90,7 +90,7 @@ int		error_check(char **args, int argc, t_raycaster *rc)
 	}
 	else if (argc == 3 && ft_strncmp(args[2], "--save", 6) != 0)
 	{
-		ft_putstr_fd("Invalid second argument", 1);
+		ft_putstr_fd("Invalid second argument\n", 1);
 		exit(0);
 	}
 	else

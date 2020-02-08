@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/20 11:47:30 by tuperera       #+#    #+#                */
-/*   Updated: 2020/02/06 16:20:18 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/08 10:34:26 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int				get_file(char *argv, t_raycaster *rc)
 	close(fd);
 	fd = open(argv, O_RDONLY);
 	rc->globals.file = (char **)malloc(sizeof(char *) * i);
-	if (!rc->globals.file)
-		return (-1);
+	if (!rc->globals.file || i < 9)
+		freefile();
 	gnl(line, fd, rc);
 	rc->globals.filelen = i;
 	close(fd);

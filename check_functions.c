@@ -6,7 +6,7 @@
 /*   By: tuperera <tuperera@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/11 11:55:16 by tuperera       #+#    #+#                */
-/*   Updated: 2020/02/06 16:02:37 by tuperera      ########   odam.nl         */
+/*   Updated: 2020/02/08 10:32:47 by tuperera      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			check_valid(char **file, t_raycaster *rc)
 	set = "RNSWESFC";
 	while (file[x] && ft_isdigit(file[x][0]) != 1)
 	{
-		while (file[x][0] == ' ' || file[x][0] == '\0')
+		while (file[x][0] == '\0' || file[x][0] == ' ')
 			x++;
 		if (ft_strchr(set, file[x][0]) == NULL && ft_isdigit(file[x][0]) != 1)
 		{
